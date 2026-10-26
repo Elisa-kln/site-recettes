@@ -31,6 +31,20 @@ const supabase = createClient(
 app.use(express.json());
 
 
+// ==================================================
+// CONFIGURATION UPLOAD PHOTO
+// ==================================================
+
+const upload = multer({
+
+    storage: multer.memoryStorage(),
+
+    limits: {
+        fileSize: 8 * 1024 * 1024
+    }
+
+});
+
 // Fichiers statiques en local.
 // Sur Vercel, le dossier public sera servi directement par le CDN.
 app.use(
@@ -49,6 +63,7 @@ app.get("/", function(req, res) {
     res.sendFile(
         path.join(
             __dirname,
+            "public",
             "index.html"
         )
     );
