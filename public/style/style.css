@@ -1,0 +1,1668 @@
+/* ==================================================
+   VARIABLES
+================================================== */
+
+:root {
+    --fond: #f7f3ed;
+    --fond-secondaire: #faf8f5;
+    --blanc: #ffffff;
+
+    --texte: #2f2a25;
+    --texte-clair: #756d65;
+
+    --principal: #d96c3f;
+    --principal-fonce: #b9512c;
+
+    --vert: #6f8f72;
+    --rouge: #c94c4c;
+    --rouge-clair: #fbeaea;
+
+    --bordure: #e7dfd5;
+
+    --rayon-petit: 9px;
+    --rayon: 12px;
+    --rayon-grand: 18px;
+    --rayon-carte: 20px;
+
+    --ombre: 0 8px 25px rgba(60, 45, 35, 0.08);
+    --ombre-hover: 0 12px 30px rgba(60, 45, 35, 0.12);
+
+    --transition: 0.2s ease;
+}
+
+/* ==================================================
+   THÈME SOMBRE
+================================================== */
+
+body.theme-sombre {
+    --fond: #1f1b18;
+    --fond-secondaire: #29231f;
+    --blanc: #2b2521;
+
+    --texte: #f4eee8;
+    --texte-clair: #b9ada3;
+
+    --principal: #e77a4e;
+    --principal-fonce: #c96138;
+
+    --vert: #789b7c;
+    --rouge: #e06161;
+    --rouge-clair: #472a2a;
+
+    --bordure: #443a33;
+
+    --ombre:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+
+    --ombre-hover:
+        0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+body.theme-sombre .carte-menu:active {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.35),
+        var(--ombre);
+
+    transform: scale(0.99);
+}
+
+/* ==================================================
+   BOUTON THÈME
+================================================== */
+
+#bouton-theme {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    z-index: 200;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: var(--texte);
+
+    background-color: var(--blanc);
+
+    border: 1px solid var(--bordure);
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow: var(--ombre);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#bouton-theme:hover {
+    transform: scale(1.05);
+
+    color: var(--principal);
+}
+
+
+#bouton-theme svg {
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+}
+
+/* ==================================================
+   BASE
+================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 25px;
+
+    font-family: Arial, sans-serif;
+
+    background-color: var(--fond);
+    color: var(--texte);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* ==================================================
+   TITRES
+================================================== */
+
+h1 {
+    margin: 10px 0 40px;
+
+    text-align: center;
+    font-size: 42px;
+
+    color: var(--texte);
+}
+
+h1::after {
+    content: "";
+
+    display: block;
+
+    width: 60px;
+    height: 4px;
+
+    margin: 12px auto 0;
+
+    background-color: var(--principal);
+
+    border-radius: 10px;
+}
+
+h2,
+h3,
+h4 {
+    color: var(--texte);
+}
+
+
+/* ==================================================
+   RECHERCHE + FILTRES
+================================================== */
+
+.zone-filtres {
+    max-width: 1200px;
+
+    margin: 0 auto 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+}
+
+#recherche,
+#filtre-categorie,
+#filtre-difficulte {
+    width: 250px;
+}
+
+
+/* ==================================================
+   CHAMPS
+================================================== */
+
+input,
+select,
+textarea {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    color: var(--texte);
+
+    background-color: var(--blanc);
+
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--principal);
+
+    box-shadow: 0 0 0 3px rgba(217, 108, 63, 0.12);
+}
+
+
+/* ==================================================
+   NOMBRE DE RÉSULTATS
+================================================== */
+
+#nombre-resultats {
+    max-width: 1200px;
+
+    margin: 20px auto;
+
+    color: var(--texte-clair);
+
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   GRILLE DES RECETTES
+================================================== */
+
+.liste-recettes {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 25px;
+}
+
+
+/* ==================================================
+   CARTES RECETTES
+================================================== */
+
+.recette {
+
+    position: relative;
+
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+
+    background-color: var(--blanc);
+
+    border: 1px solid transparent;
+    border-radius: var(--rayon-grand);
+
+    box-shadow: var(--ombre);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.recette:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--principal);
+
+    box-shadow: var(--ombre-hover);
+}
+
+.recette h2 {
+    margin: 0 0 10px;
+
+    font-size: 21px;
+}
+
+
+/* Photo */
+
+.photo-recette {
+    width: 100%;
+    height: 210px;
+
+    margin-bottom: 18px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+}
+
+
+/* Description éventuelle */
+
+.description-carte {
+    flex-grow: 1;
+
+    margin: 5px 0 12px;
+
+    color: var(--texte-clair);
+
+    line-height: 1.6;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* ==================================================
+   INFOS RAPIDES SUR LES CARTES
+================================================== */
+
+.infos-recette {
+    margin: 5px 0 16px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    color: var(--texte-clair);
+
+    font-size: 14px;
+}
+
+.infos-recette span {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    white-space: nowrap;
+}
+
+.icone-info {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    color: var(--principal);
+}
+
+
+/* ==================================================
+   BOUTONS DES CARTES
+================================================== */
+
+.recette button {
+    margin-top: 8px;
+    padding: 10px 14px;
+
+    border: none;
+    border-radius: var(--rayon-petit);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        transform var(--transition);
+}
+
+.bouton-recette {
+    color: white;
+
+    background-color: var(--principal);
+}
+
+.bouton-recette:hover {
+    background-color: var(--principal-fonce);
+}
+
+.bouton-modifier-detail {
+    position: absolute;
+
+    top: 22px;
+    right: 22px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: var(--principal);
+
+    background-color: var(--fond);
+
+    border: 1px solid var(--bordure);
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.bouton-modifier-detail svg {
+    width: 19px;
+    height: 19px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.bouton-modifier-detail:hover {
+    color: white;
+
+    background-color: var(--principal);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 15px rgba(217, 108, 63, 0.22);
+}
+
+.bouton-supprimer {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    z-index: 2;
+
+    width: 36px;
+    height: 36px;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--rouge);
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    border: 1px solid rgba(201, 76, 76, 0.2) !important;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.bouton-supprimer svg {
+    width: 17px;
+    height: 17px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.bouton-supprimer:hover {
+    color: white;
+
+    background-color: var(--rouge);
+
+    transform: scale(1.08);
+
+    box-shadow: 0 5px 14px rgba(201, 76, 76, 0.25);
+}
+
+
+/* ==================================================
+   DÉTAIL D'UNE RECETTE
+================================================== */
+
+#detail-recette {
+
+    position: relative;
+
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 30px;
+
+    background-color: var(--blanc);
+
+    border-left: 5px solid var(--principal);
+    border-radius: var(--rayon-carte);
+
+    box-shadow: var(--ombre);
+
+    animation: ouverture-detail 0.25s ease;
+}
+
+@keyframes ouverture-detail {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==================================================
+   ENTÊTE DU DÉTAIL
+================================================== */
+
+.detail-entete {
+    margin-bottom: 35px;
+
+    display: grid;
+    grid-template-columns: minmax(300px, 430px) 1fr;
+
+    align-items: center;
+
+    gap: 40px;
+}
+
+
+/* Photo */
+
+.detail-photo {
+    width: 100%;
+    height: 300px;
+
+    overflow: hidden;
+
+    background-color: var(--fond);
+
+    border-radius: 16px;
+}
+
+.detail-photo img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+.detail-photo-vide {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--texte-clair);
+
+    font-size: 45px;
+}
+
+
+/* Informations */
+
+.detail-infos {
+    min-width: 0;
+}
+
+.detail-sur-titre {
+    margin-bottom: 8px;
+
+    display: inline-block;
+
+    color: var(--principal);
+
+    font-size: 13px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.detail-infos h2 {
+    margin: 0 0 25px;
+
+    font-size: 34px;
+    line-height: 1.2;
+}
+
+
+/* ==================================================
+   MÉTADONNÉES DU DÉTAIL
+================================================== */
+
+.detail-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.meta-recette {
+    padding: 14px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    background-color: var(--fond);
+
+    border-radius: var(--rayon);
+}
+
+.meta-recette svg {
+    width: 23px;
+    height: 23px;
+
+    flex-shrink: 0;
+
+    fill: none;
+
+    stroke: var(--principal);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.meta-recette div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+.meta-recette span {
+    color: var(--texte-clair);
+
+    font-size: 12px;
+}
+
+.meta-recette strong {
+    color: var(--texte);
+
+    font-size: 14px;
+}
+
+
+/* ==================================================
+   INGRÉDIENTS + PRÉPARATION
+================================================== */
+
+.detail-contenu {
+    padding-top: 30px;
+
+    display: grid;
+    grid-template-columns:
+        minmax(270px, 0.8fr)
+        minmax(0, 1.7fr);
+
+    gap: 40px;
+
+    border-top: 1px solid var(--bordure);
+}
+
+.bloc-detail {
+    min-width: 0;
+}
+
+
+/* Titres */
+
+.titre-bloc-detail {
+    margin-bottom: 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.titre-bloc-detail h3 {
+    margin: 0;
+
+    font-size: 21px;
+}
+
+.titre-bloc-detail svg {
+    width: 21px;
+    height: 21px;
+
+    fill: none;
+
+    stroke: var(--principal);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+
+/* ==================================================
+   INGRÉDIENTS
+================================================== */
+
+.liste-ingredients {
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    list-style: none;
+}
+
+.liste-ingredients li {
+    padding: 9px 12px;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    color: var(--texte);
+
+    background-color: var(--fond-secondaire);
+
+    border: 1px solid transparent;
+    border-radius: var(--rayon-petit);
+
+    line-height: 1.45;
+
+    transition:
+        background-color var(--transition),
+        border-color var(--transition);
+}
+
+.liste-ingredients li:hover {
+    background-color: var(--blanc);
+
+    border-color: var(--bordure);
+}
+
+.puce-ingredient {
+    width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    color: white;
+
+    background-color: var(--principal);
+
+    border-radius: 50%;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+/* ==================================================
+   ÉTAPES DE PRÉPARATION
+================================================== */
+
+.liste-etapes {
+    display: flex;
+    flex-direction: column;
+
+    gap: 28px;
+}
+
+.etape-recette {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 42px 1fr;
+
+    gap: 16px;
+}
+
+
+/* Ligne verticale */
+
+.etape-recette:not(:last-child)::before {
+    content: "";
+
+    position: absolute;
+
+    top: 42px;
+    bottom: -28px;
+    left: 20px;
+
+    width: 2px;
+
+    background-color: var(--bordure);
+}
+
+
+/* Numéro */
+
+.numero-etape {
+    width: 42px;
+    height: 42px;
+
+    position: relative;
+
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    background-color: var(--principal);
+
+    border-radius: 50%;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    box-shadow: 0 3px 10px rgba(217, 108, 63, 0.22);
+}
+
+
+/* Texte */
+
+.contenu-etape {
+    padding-top: 2px;
+}
+
+.contenu-etape h4 {
+    margin: 0 0 7px;
+
+    font-size: 15px;
+}
+
+.contenu-etape p {
+    margin: 0;
+
+    color: var(--texte-clair);
+
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   BOUTON FLOTTANT AJOUTER
+================================================== */
+
+#bouton-ajouter-flottant {
+    position: fixed;
+
+    right: 30px;
+    bottom: 30px;
+
+    z-index: 50;
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: white;
+
+    background-color: var(--principal);
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(217, 108, 63, 0.35);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#bouton-ajouter-flottant svg {
+    width: 28px;
+    height: 28px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+
+#bouton-ajouter-flottant:hover {
+    background-color: var(--principal-fonce);
+
+    transform: translateY(-3px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(217, 108, 63, 0.4);
+}
+
+/* ==================================================
+   MODALE DU FORMULAIRE
+================================================== */
+
+.modal-recette {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background-color: rgba(47, 42, 37, 0.55);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* Lorsque la modale est ouverte */
+
+.modal-recette.ouverte {
+    display: flex;
+}
+
+
+/* Contenu */
+
+.modal-contenu {
+    position: relative;
+
+    width: 100%;
+    max-width: 960px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 35px;
+
+    background-color: var(--blanc);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.18);
+
+    animation: ouverture-modal 0.25s ease;
+}
+
+
+@keyframes ouverture-modal {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+.modal-contenu #formulaire-recette {
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+}
+
+.modal-contenu .titre-formulaire {
+    margin: 0 0 30px;
+
+    text-align: center;
+}
+
+
+#fermer-modal {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    color: var(--texte-clair);
+
+    background-color: var(--fond);
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#fermer-modal svg {
+    width: 18px;
+    height: 18px;
+
+    fill: none;
+
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+
+#fermer-modal:hover {
+    color: white;
+
+    background-color: var(--rouge);
+
+    transform: rotate(5deg);
+}
+
+/* ==================================================
+   FORMULAIRE
+================================================== */
+
+.titre-formulaire {
+    margin: 50px 0 20px;
+
+    text-align: center;
+
+    font-size: 28px;
+}
+
+#formulaire-recette {
+    max-width: 900px;
+
+    margin: 0 auto 40px;
+    padding: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+
+    background-color: var(--blanc);
+
+    border-radius: var(--rayon-carte);
+
+    box-shadow: var(--ombre);
+}
+
+
+/* Champs pleine largeur */
+
+#nom-recette,
+#ingredients-recette,
+#etapes-recette,
+.zone-photo,
+#formulaire-recette button[type="submit"] {
+    grid-column: 1 / -1;
+}
+
+#ingredients-recette {
+    min-height: 150px;
+
+    resize: vertical;
+}
+
+#etapes-recette {
+    min-height: 220px;
+
+    resize: vertical;
+}
+
+
+/* ==================================================
+   PHOTO DU FORMULAIRE
+================================================== */
+
+.zone-photo {
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 25px;
+
+    background-color: var(--fond-secondaire);
+
+    border: 1px solid var(--bordure);
+    border-radius: 14px;
+}
+
+.conteneur-apercu {
+    position: relative;
+
+    width: 220px;
+    height: 150px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    background-color: var(--fond-secondaire);
+
+    border: 2px dashed var(--bordure);
+    border-radius: var(--rayon);
+}
+
+#apercu-photo {
+    width: 100%;
+    height: 100%;
+
+    display: none;
+
+    object-fit: cover;
+}
+
+#placeholder-photo {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: var(--texte-clair);
+
+    font-size: 14px;
+}
+
+.icone-photo {
+    font-size: 30px;
+}
+
+.choix-photo {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.choix-photo p {
+    margin: 0;
+
+    font-weight: bold;
+}
+
+#photo-recette {
+    display: none;
+}
+
+.bouton-photo {
+    padding: 11px 18px;
+
+    display: inline-block;
+
+    color: white;
+
+    background-color: var(--principal);
+
+    border-radius: var(--rayon-petit);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+.bouton-photo:hover {
+    background-color: var(--principal-fonce);
+
+    transform: translateY(-1px);
+}
+
+#nom-photo {
+    color: var(--texte-clair);
+
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   BOUTON DU FORMULAIRE
+================================================== */
+
+#formulaire-recette button[type="submit"] {
+    padding: 14px;
+
+    color: white;
+
+    background-color: var(--principal);
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition),
+        transform var(--transition);
+}
+
+#formulaire-recette button[type="submit"]:hover {
+    background-color: var(--principal-fonce);
+
+    transform: translateY(-2px);
+}
+
+/* ==================================================
+   MENU DE LA SEMAINE
+================================================== */
+
+.menu-semaine {
+    max-width: 1200px;
+
+    margin: 30px auto 45px;
+    padding: 25px;
+
+    background-color: var(--blanc);
+
+    border-radius: 20px;
+
+    box-shadow: var(--ombre);
+}
+
+
+.entete-menu {
+    margin-bottom: 20px;
+}
+
+
+.entete-menu h2 {
+    margin: 3px 0 0;
+
+    font-size: 25px;
+}
+
+
+.sur-titre-menu {
+    color: var(--principal);
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.liste-menu-semaine {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 15px;
+}
+
+
+.carte-menu {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 10px;
+
+    background-color: var(--fond);
+
+    border-radius: 12px;
+}
+
+
+.carte-menu img {
+    width: 75px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 9px;
+}
+
+
+.infos-menu {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.infos-menu strong {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.infos-menu span {
+    color: var(--texte-clair);
+
+    font-size: 13px;
+}
+
+
+.retirer-menu {
+    position: absolute;
+
+    top: 5px;
+    right: 7px;
+
+    padding: 4px;
+
+    color: var(--rouge);
+
+    background: none;
+
+    border: none;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+.menu-vide {
+    grid-column: 1 / -1;
+
+    margin: 0;
+
+    color: var(--texte-clair);
+
+    text-align: center;
+}
+
+.carte-menu {
+    cursor: pointer;
+
+    color: var(--texte);
+
+    background-color: var(--fond);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.carte-menu strong {
+    color: var(--texte);
+}
+
+.carte-menu .infos-menu span {
+    color: var(--texte-clair);
+}
+
+
+.carte-menu:hover {
+    transform: translateY(-2px);
+    background-color: var(--fond-secondaire);
+}
+
+/* ==================================================
+   RESPONSIVE — TABLETTE
+================================================== */
+
+@media (max-width: 900px) {
+
+    .liste-recettes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .detail-entete {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .detail-photo {
+        height: 300px;
+    }
+
+    .detail-contenu {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ==================================================
+   RESPONSIVE — MOBILE
+================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+
+    /* Grille recettes */
+
+    .liste-recettes {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Filtres */
+
+    .zone-filtres {
+        align-items: stretch;
+    }
+
+    #recherche,
+    #filtre-categorie,
+    #filtre-difficulte {
+        width: 100%;
+    }
+
+
+    /* Cartes */
+
+    .photo-recette {
+        height: 220px;
+    }
+
+    .infos-recette {
+        flex-wrap: wrap;
+    }
+
+
+    /* Détail */
+
+    #detail-recette {
+        padding: 20px;
+    }
+
+    .detail-photo {
+        height: 230px;
+    }
+
+    .detail-infos h2 {
+        font-size: 27px;
+    }
+
+    .detail-meta {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Formulaire */
+
+    .titre-formulaire {
+        margin-top: 40px;
+
+        font-size: 24px;
+    }
+
+    #formulaire-recette {
+        padding: 20px;
+
+        grid-template-columns: 1fr;
+    }
+
+    #nom-recette,
+    #ingredients-recette,
+    #etapes-recette,
+    .zone-photo,
+    #formulaire-recette button[type="submit"] {
+        grid-column: auto;
+    }
+
+
+    /* Photo formulaire */
+
+    .zone-photo {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .conteneur-apercu {
+        width: 100%;
+        height: 210px;
+    }
+
+    .choix-photo {
+        align-items: stretch;
+    }
+
+    .bouton-photo {
+        text-align: center;
+    }
+
+    /* ==================================================
+       DÉTAIL RECETTE SUR MOBILE
+    ================================================== */
+    
+    /* On cache la partie du détail qui répète
+       la photo, le titre et les informations */
+    #detail-recette .detail-entete {
+        display: none;
+    }
+    
+    
+    /* Le détail vient se coller directement sous la carte */
+    #detail-recette {
+        margin-top: -25px;
+    
+        padding: 25px;
+    
+        border-left: none;
+        border-top: 1px solid var(--bordure);
+    
+        border-radius: 0 0 18px 18px;
+    
+        box-shadow: var(--ombre);
+    }
+    
+    
+    /* Quand la carte est ouverte,
+       on enlève ses arrondis du bas */
+    .recette.ouverte {
+        border-radius: 18px 18px 0 0;
+    
+        border-bottom-color: transparent;
+    
+        box-shadow: none;
+    
+        transform: none;
+    }
+    
+    
+    /* Pas de séparation inutile en haut */
+    #detail-recette .detail-contenu {
+        padding-top: 0;
+    
+        border-top: none;
+    
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (hover: hover) {
+
+    .carte-menu:hover {
+        transform: translateY(-2px);
+        background-color: var(--fond-secondaire);
+    }
+
+}

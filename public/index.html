@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mes recettes</title>
+
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+
+<body>
+
+<button
+    id="bouton-theme"
+    type="button"
+    aria-label="Changer de thème"
+    title="Changer de thème"
+>
+    <svg
+        id="icone-theme"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.41 1.41"></path>
+        <path d="M17.66 17.66l1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M4.93 19.07l1.41-1.41"></path>
+        <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+</button>
+
+<h1>Mes recettes</h1>
+
+<!--Barre de recherche-->
+<div class="zone-filtres">
+    <input
+        type="text"
+        id="recherche"
+        placeholder="Rechercher une recette..."
+    >
+
+    <!--Filtres-->
+    <select id="filtre-categorie">
+        <option value="Toutes">Toutes les catégories</option>
+        <option value="Viande">Viande</option>
+        <option value="Poissons">Poissons</option>
+        <option value="Végétarien">Végétarien</option>
+        <option value="Dessert">Dessert</option>
+    </select>
+
+    <select id="filtre-difficulte">
+        <option value="Toutes">Toutes les difficultés</option>
+        <option value="Facile">Facile</option>
+        <option value="Moyenne">Moyenne</option>
+        <option value="Difficile">Difficile</option>
+    </select>
+</div>
+
+<!--menu semaine-->
+<section id="menu-semaine" class="menu-semaine">
+
+    <div class="entete-menu">
+        <div>
+            <span class="sur-titre-menu">Cette semaine</span>
+            <h2>Mon menu</h2>
+        </div>
+    </div>
+
+    <div id="liste-menu-semaine" class="liste-menu-semaine">
+    </div>
+
+</section>
+
+<!--Cartes recettes-->
+<p id="nombre-resultats"></p>
+
+<div class="liste-recettes">
+</div>
+
+<!--détails des recettes-->
+<div id="detail-recette" hidden></div>
+
+<!--Formulaire-->
+
+<!-- Bouton flottant Ajouter -->
+<button
+    id="bouton-ajouter-flottant"
+    type="button"
+    aria-label="Ajouter une recette"
+    title="Ajouter une recette"
+>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 5v14" />
+        <path d="M5 12h14" />
+    </svg>
+</button>
+
+
+<!-- Fenêtre du formulaire -->
+<div id="modal-recette" class="modal-recette">
+
+    <div class="modal-contenu">
+
+        <button
+            id="fermer-modal"
+            type="button"
+            aria-label="Fermer"
+            title="Fermer"
+        >
+            <svg viewBox="0 0 24 24">
+                <path d="M6 6l12 12" />
+                <path d="M18 6L6 18" />
+            </svg>
+        </button>
+
+
+        <h2
+            class="titre-formulaire"
+            id="titre-formulaire"
+        >
+            Ajouter une recette
+        </h2>
+
+
+        <form id="formulaire-recette">
+        
+            <input
+                type="text"
+                id="nom-recette"
+                placeholder="Nom de la recette"
+                required
+            >
+        
+            <div class="zone-photo">
+            
+            <div class="conteneur-apercu">
+                <img
+                    id="apercu-photo"
+                    alt="Aperçu de la recette"
+                >
+            
+                <div id="placeholder-photo">
+                    <span class="icone-photo">📷</span>
+                    <span>Aperçu de la photo</span>
+                </div>
+            </div>
+        
+            <div class="choix-photo">
+            
+                <p>Photo de la recette</p>
+            
+                <label for="photo-recette" class="bouton-photo">
+                    Choisir une photo
+                </label>
+            
+                <input
+                    type="file"
+                    id="photo-recette"
+                    accept="image/jpeg, image/png, image/webp"
+                >
+            
+                <span id="nom-photo">
+                    Aucune photo sélectionnée
+                </span>
+            
+            </div>
+        
+        </div>
+
+            <input
+            type="number"
+            id="temps-recette"
+            placeholder="Temps en minutes"
+            min="1"
+            required
+            >
+
+            <select id="difficulte-recette">
+                <option value="Facile">Facile</option>
+                <option value="Moyenne">Moyenne</option>
+                <option value="Difficile">Difficile</option>
+            </select>
+        
+            <input
+                type="number"
+                id="personnes-recette"
+                placeholder="Nombre de personnes"
+                min="1"
+                required
+            >
+        
+            <select id="categorie">
+                <option value="Viande">Viande</option>
+                <option value="Poisson">Poisson</option>
+                <option value="Végétarien">Végétarien</option>
+                <option value="Dessert">Dessert</option>
+            </select>
+        
+            <textarea
+                id="ingredients-recette"
+                placeholder="Ingrédients : un ingrédient par ligne"
+                required></textarea>
+        
+            <textarea
+            id="etapes-recette"
+            placeholder="Étapes de préparation : laissez une ligne vide entre chaque étape"
+            required
+            ></textarea>
+        
+            <button type="submit">
+                Ajouter la recette
+            </button>
+        
+        </form>
+
+    </div>
+
+</div>
+
+<script src="/script/script.js"></script>
+
+</body>
+</html>

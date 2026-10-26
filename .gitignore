@@ -1,0 +1,14 @@
+# Dépendances Node
+node_modules/
+
+# Variables secrètes
+.env
+
+# Anciennes photos locales
+uploads/
+
+# Ancienne base de données locale
+db.json
+
+# Configuration locale Vercel
+.vercel/
